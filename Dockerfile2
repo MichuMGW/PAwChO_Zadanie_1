@@ -1,0 +1,36 @@
+# syntax=docker/dockerfile:1.5
+
+# Etap 1 - budowanie aplikacji
+FROM node:20-alpine AS builder
+
+WORKDIR /usr/app
+
+# Dodanie wsparcia dla SSH do GitHuba i secretów
+RUN apk add --no-cache git openssh
+
+# Ustawienie hosta github
+RUN mkdir -p ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+# Klonowanie repozytorium i instalacja zależności
+RUN --mount=type=ssh \
+    git clone git@github.com:MichuMGW/PAwChO_Zadanie_1.git . && \
+    npm install --production
+
+# Etap 2 – finalny obraz
+FROM node:20-alpine as final
+
+LABEL org.opencontainers.image.authors="Michał Filipczak"
+
+WORKDIR /usr/app
+
+# Kopoiowanie plików z etapu budowy
+COPY --from=builder /usr/app /usr/app
+
+RUN apk add --no-cache curl
+
+EXPOSE 3000
+
+HEALTHCHECK --interval=10s --timeout=2s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:3000 || exit 1
+
+CMD ["node", "server.js"]

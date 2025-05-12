@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.2
 
-# Etap 1
+# Etap 1 - budowanie aplikacji
 FROM scratch AS build
 ADD alpine-minirootfs-3.21.3-x86_64.tar /
 
@@ -17,7 +17,7 @@ RUN npm install --production
 # Kopiowanie plików źródłowych
 COPY server.js ./
 
-# Etap 2 – Finalny obraz
+# Etap 2 – finalny obraz
 FROM node:20-alpine AS final
 
 # Katalog roboczy
