@@ -57,7 +57,7 @@ docker scout cves --platform linux/arm64 michumgw/weather-app:latest --only-seve
 ![scout](img/img_d/scout.png)
 > W obrazie wykryto jedną podatność typu HIGH: CVE-2024-21538 w bibliotece `cross-spawn@7.0.3`.  
 > Zagrożenie dotyczy złożoności wyrażeń regularnych (ReDoS), ale biblioteka nie jest wykorzystywana bezpośrednio przez aplikację, ani w żadnym miejscu aplikacja nie przyjmuje danych wejściowych użytkownika do dynamicznego tworzenia poleceń systemowych.  
-> `cross-spawn` jest zależnością pośrednią, a funkcjonalność, której dotyczy luka, nie jest aktywnie wykorzystywana w mojej aplikacji.  
+> `cross-spawn` jest zależnością pośrednią, a funkcjonalność, której dotyczy luka, nie jest aktywnie wykorzystywana w aplikacji.  
 > W związku z tym podatność można uznać za **nieistotną** w kontekście tej aplikacji.
 
 ### 6. Potwierdzenie wykorzystania danych cache przy budowie obrazu
